@@ -46,7 +46,7 @@ Control::Control()
 
     /* 生命值 */
     lifeFrameBar = new QGraphicsRectItem(LifeBarPos.x(), LifeBarPos.y(), myLife*2, 10);
-//    lifeFrameBar->setPen(QPen(Qt::white));
+    //    lifeFrameBar->setPen(QPen(Qt::white));
     lifeFrameBar->setBrush(QBrush(Qt::white));
     addItem(lifeFrameBar);
     lifeFrameBar->hide();
@@ -67,14 +67,14 @@ Control::Control()
 
     /* 技能值 */
     skillFrameBar = new QGraphicsRectItem(SkillBarPos.x(), SkillBarPos.y(), myLife*2, 10);
-//    skillFrameBar->setPen(QPen(Qt::white));
+    //    skillFrameBar->setPen(QPen(Qt::white));
     skillFrameBar->setBrush(QBrush(Qt::white));
-//    skillFrameBar->setZValue(3);                                  // 设置技能条在最顶层（飞机上方）（不太行，这样它在遮罩面板哪里也显示很明显）
+    //    skillFrameBar->setZValue(3);                                  // 设置技能条在最顶层（飞机上方）（不太行，这样它在遮罩面板哪里也显示很明显）
     addItem(skillFrameBar);
     skillFrameBar->hide();
     skillBar = new QGraphicsRectItem(SkillBarPos.x(), SkillBarPos.y(), mySkill*2, 10);
     skillBar->setBrush(QBrush(Qt::blue));
-//    skillBar->setZValue(3);                                       // 设置技能条在最顶层（飞机上方）
+    //    skillBar->setZValue(3);                                       // 设置技能条在最顶层（飞机上方）
     addItem(skillBar);
     skillBar->hide();
 
@@ -92,24 +92,24 @@ Control::Control()
     player->play();
 
 
-//    /* 按钮音效路径 */
-//    this->startBtnVoiceFile  = "qrc:///music/getScore.wav";         // 开始按钮 音效路径
-//    this->helpBtnVoiceFile   = "qrc:///music/click4.mp3";           // 帮助按钮 音效路径
-//    this->quitBtnVoiceFile   = "qrc:///music/cancel.wav";           // 退出按钮 音效路径
-//    this->resumeBtnVoiceFile = "qrc:///music/getScore.wav";         // 继续按钮 音效路径
-//    this->retryBtnVoiceFile  = "qrc:///music/getScore.wav";         // 重试按钮 音效路径
+    //    /* 按钮音效路径 */
+    //    this->startBtnVoiceFile  = "qrc:///music/getScore.wav";         // 开始按钮 音效路径
+    //    this->helpBtnVoiceFile   = "qrc:///music/click4.mp3";           // 帮助按钮 音效路径
+    //    this->quitBtnVoiceFile   = "qrc:///music/cancel.wav";           // 退出按钮 音效路径
+    //    this->resumeBtnVoiceFile = "qrc:///music/getScore.wav";         // 继续按钮 音效路径
+    //    this->retryBtnVoiceFile  = "qrc:///music/getScore.wav";         // 重试按钮 音效路径
 
-//    btnPlayList = new QMediaPlaylist;                               // 新建 按钮音效 媒体列表
-//    btnPlayList->addMedia(QUrl(this->startBtnVoiceFile));                 // 添加 开始按钮 媒体文件
-//    btnPlayList->addMedia(QUrl(this->helpBtnVoiceFile));                  // 添加 帮助按钮 媒体文件
-//    btnPlayList->addMedia(QUrl(this->quitBtnVoiceFile));                  // 添加 退出按钮 媒体文件
-//    btnPlayList->addMedia(QUrl(this->resumeBtnVoiceFile));                // 添加 继续按钮 媒体文件
-//    btnPlayList->addMedia(QUrl(this->retryBtnVoiceFile));                 // 添加 重试按钮 媒体文件
-//    btnPlayList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);  // 只播放一次
-//    btnPlayer = new QMediaPlayer(this);                             // 新增 按钮音效 播放者
-//    btnPlayer->setPlaylist(btnPlayList);                            // 设置 播放者 媒体列表
-//    btnPlayer->currentMedia()
-//    btnPlayer->play();                                              // 播放媒体
+    //    btnPlayList = new QMediaPlaylist;                               // 新建 按钮音效 媒体列表
+    //    btnPlayList->addMedia(QUrl(this->startBtnVoiceFile));                 // 添加 开始按钮 媒体文件
+    //    btnPlayList->addMedia(QUrl(this->helpBtnVoiceFile));                  // 添加 帮助按钮 媒体文件
+    //    btnPlayList->addMedia(QUrl(this->quitBtnVoiceFile));                  // 添加 退出按钮 媒体文件
+    //    btnPlayList->addMedia(QUrl(this->resumeBtnVoiceFile));                // 添加 继续按钮 媒体文件
+    //    btnPlayList->addMedia(QUrl(this->retryBtnVoiceFile));                 // 添加 重试按钮 媒体文件
+    //    btnPlayList->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);  // 只播放一次
+    //    btnPlayer = new QMediaPlayer(this);                             // 新增 按钮音效 播放者
+    //    btnPlayer->setPlaylist(btnPlayList);                            // 设置 播放者 媒体列表
+    //    btnPlayer->currentMedia()
+    //    btnPlayer->play();                                              // 播放媒体
 
     /* 遮罩面板 */
     QWidget *mask = new QWidget;
@@ -123,7 +123,7 @@ Control::Control()
 
     /* 子弹类型/技能/游戏场景 */
     isSuperBullet = false;          // 游戏开始 默认不使用超级子弹
-    myBulletType = 0;           	// 游戏开始 默认不使用技能
+    myBulletType = 0;               // 游戏开始 默认不使用技能
     sceneId = 0;                    // 游戏开始 默认游戏场景 为欢迎界面
 
     /* 得分提示(右下角) */
@@ -131,7 +131,7 @@ Control::Control()
     scoreText = new QGraphicsTextItem;
     scoreText->setPos(scoreTextPos);
     scoreText->setHtml(tr("<font color=white>SCORE: %1</font>").arg(score));
-//    scoreText->setFont(QFont("Courier", 15));
+    //    scoreText->setFont(QFont("Courier", 15));
     scoreText->setFont(QFont("Algerian", 10));
     addItem(scoreText);
     scoreText->hide();
@@ -145,10 +145,11 @@ Control::Control()
     //                            "QPushButton:hover{color:red; }");
     // 设置按钮样式：背景为透明、字体颜色white，悬浮后字体颜色变red并且字体放大为30px，按下后按钮下沉
     startGameBtn->setStyleSheet("QPushButton{background:transparent; color:white; }"
-                               "QPushButton:hover{color:red; font-size:30px; }"
-                               "QPushButton:pressed{padding-left:6px; padding-top:6px; }");
+                                "QPushButton:hover{color:red; font-size:30px; }"
+                                "QPushButton:pressed{border-left:6px; border-top:6px; }");
+//                                "QPushButton:pressed{padding-left:6px; padding-top:6px; border:10px; }");
     connect(startGameBtn,SIGNAL(clicked()), this, SLOT(startGame()));
-//    connect(startGameBtn,SIGNAL(pressed()),this,SLOT(playVoice())); // 播放音效
+    //    connect(startGameBtn,SIGNAL(pressed()),this,SLOT(playVoice())); // 播放音效
     startGameButton = addWidget(startGameBtn);
     startGameButton->setPos(331, 250);
     startGameButton->setZValue(2);
@@ -238,11 +239,11 @@ Control::Control()
 void Control::timerEvent(QTimerEvent *event)
 {
     if(event->timerId()==myPlaneMoveTimerId){
-        changePlanePosition(myplane, myplane->x()+myPlaneMove.x(), myplane->y()+myPlaneMove.y());
+        changePlanePosition(myplane, myplane->x() + myPlaneMove.x(), myplane->y() + myPlaneMove.y());
         changeLifeBarPosition(myPlanePos);                                          // 更新血条位置
         updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, 0, QBrush(Qt::red), false); // 更新血条
     }
-    if(event->timerId()==enemyBulletShootTimerId)
+    else if(event->timerId()==enemyBulletShootTimerId)
         shootEnemyBullets();
     else if(event->timerId()==myBulletShootTimerId)
         shootBullet();
@@ -260,13 +261,13 @@ void Control::timerEvent(QTimerEvent *event)
     }
     else if(event->timerId()==bossGenerateTimeId)
         generateBoss();
-    else if(event->timerId()==skillJTimerId){
+    else if(event->timerId()==skillJTimerId) {
         killTimer(skillJTimerId);
-        myBulletType = 0;   // 不使用J技能（单发子弹）
+        myBulletType = 0;       // 不使用J技能（单发子弹）
     }
-    else if(event->timerId()==superBulletTimerId){
+    else if(event->timerId()==superBulletTimerId) {
         killTimer(superBulletTimerId);
-        isSuperBullet = false;// 不使用超级子弹
+        isSuperBullet = false;  // 不使用超级子弹
         myBulletShootTimerId = startTimer(myBulletShootTimerItv);
     }
 }
@@ -276,7 +277,7 @@ void Control::keyPressEvent(QKeyEvent *event)
 {
     // 按W键/上键，玩家飞机向上移动
     if((event->key()==Qt::Key_W || event->key()==Qt::Key_Up)
-       && !event->isAutoRepeat() && sceneId==1)
+        && !event->isAutoRepeat() && sceneId==1)
     {
         if(myPlaneMove==QPointF(0,0))
             myPlaneMoveTimerId = startTimer(myPlaneMoveTimerItv);
@@ -317,11 +318,12 @@ void Control::keyPressEvent(QKeyEvent *event)
     // 按K键，触发技能，可以打掉所有飞机，消耗3点技能值
     else if(event->key()==Qt::Key_K && myplane->skill>=3 && sceneId==1)
     {
+        // 用正向迭代器iterator遍历容器
         for(vector<EnemyPlane*>::iterator iter=enemyplanes.begin(); iter!=enemyplanes.end(); iter++)
         {
             score++;    // 得分增加
             scoreText->setHtml(tr("<font color=white>SCORE: %1</font>").arg(score));
-            removeItem(*iter);
+            removeItem(*iter);  // *iter就是迭代器iter指向的元素
             delete *iter;
         }
         enemyplanes.clear();
@@ -370,15 +372,16 @@ void Control::keyReleaseEvent(QKeyEvent *event)
 /* 生成小敌机，返回是否成功生成 */
 bool Control::generateEnemyPlane()
 {
-	/* 随机在第一行生成敌机 */
+    /* 随机在第一行生成敌机 */
     srand(time(NULL));              // 初始化时间种子
     QPixmap pixmap(QPixmap(QString::fromStdString(enemyPlaneImageFile)));
     int cnt = 0;
-//    int x = rand() % (int)width();  // 敌机最左端位置
+    //    int x = rand() % (int)width();  // 敌机最左端位置
     int x = rand() % (int)(width() - pixmap.width());  //敌机最左端位置
     for(cnt = 0; cnt < 100; cnt++)
     {
         bool flag = true;           // 此位置是否合法
+        // 以iter为暂存变量，循环遍历整个enemyplanes
         for(auto iter:enemyplanes)
         {
             // 如果新敌机位置和旧敌机位置相交，则位置不合法
@@ -392,7 +395,7 @@ bool Control::generateEnemyPlane()
         if(flag)
             break;
         else
-//            x = rand() % (int)width();
+            //            x = rand() % (int)width();
             x = rand() % (int)(width() - pixmap.width());
     }
 
@@ -402,7 +405,13 @@ bool Control::generateEnemyPlane()
 
     /* 新增敌机 */
     EnemyPlane *enemy = new EnemyPlane(x, 0, enemyPlaneImageFile, this, ORD, enemyLife);
-    enemyplanes.push_back(enemy);
+    enemyplanes.push_back(enemy);   // 将一个新的元素加到vector的最后面，位置为当前最后一个元素的下一个元素
+    /* vector常用函数功能：
+     *      pop_back()              // 移除最后一个元素
+     *      clear()                 // 清空所有元素
+     *      empty()                 // 判断vector是否为空，如果为空返回true
+     *      erase()                 // 删除指定元素
+     */
     return true;
 }
 
@@ -413,9 +422,9 @@ bool Control::generateBoss()
     srand(time(NULL));              // 初始化时间种子
     QPixmap pixmap(QPixmap(QString::fromStdString(bossImageFile)));
     int cnt = 0;
-//    int x = rand() % (int)width();  //BOSS机最左端位置
+    //    int x = rand() % (int)width();  //BOSS机最左端位置
     int x = rand() % (int)(width() - pixmap.width());  // BOSS机最左端位置
-    for(cnt=0; cnt<100; cnt++)
+    for(cnt = 0; cnt < 100; cnt++)
     {
         bool flag = true;           // 此位置是否合法
         for(auto iter:enemyplanes)
@@ -431,7 +440,7 @@ bool Control::generateBoss()
         if(flag)
             break;
         else
-//            x = rand() % (int)width();
+            //            x = rand() % (int)width();
             x = rand() % (int)(width()-pixmap.width());
     }
 
@@ -445,23 +454,24 @@ bool Control::generateBoss()
     return true;
 }
 
-/* 改变我机位置，返回飞机是否还在战场(是否还存活着) */
+/* 改变飞机位置，返回飞机是否还在战场 */
 bool Control::changePlanePosition(Plane *plane, int newX, int newY)
 {
     /* 检查位置是否为新位置，是，则直接返回true */
     if (plane->x() == newX && plane->y() == newY)
-		return true;
+        return true;
 
-    /* 检查新位置是否合法，不合法则直接返回 */
-//    if (newX<0 || newX>width() || newY<0 || newY>height())
+    /* 检查新位置是否合法，不合法则直接返回true */
+    //    if (newX<0 || newX>width() || newY<0 || newY>height())
+    // 敌机只能往下移动，只检查是否出下界，玩家飞机四个方向均要检测
     if (newX<0 || newX>(width()-m_pixmap.width()) || newY<0 || newY>(height()-m_pixmap.height()))
     {
         if (plane->part == ME)          //玩家飞机不允许出界
             return true;
         else if (plane->part == ENEMY)  //敌机不允许出上界、左界、右界，但出下界之后将被删除
         {
-//                        if (newY>height())
-            if (newY>(height()-m_pixmap.height()))
+            if (newY > height())
+//            if (newY>(height()-m_pixmap.height()))
             {
                 plane->delScreen(this);
                 return false;
@@ -483,6 +493,7 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
                 updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, +20, QBrush(Qt::red), false);
                 removeItem(*it);
                 delete *it;
+                // erase() 删除vector中指定的元素
                 it = lifesupplys.erase(it);
             }
             else
@@ -490,10 +501,10 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
         }
 
 
-	/* 检查新位置是否与某一飞机位置冲突 */
-	/* 首先检查是否与敌机碰撞 */
-	for (vector<EnemyPlane*>::iterator it = enemyplanes.begin(); it != enemyplanes.end(); ) //遍历敌机
-	{
+    /* 检查新位置是否与某一飞机位置冲突 */
+    /* 首先检查玩家飞机是否与敌机碰撞 */
+    for (vector<EnemyPlane*>::iterator it = enemyplanes.begin(); it != enemyplanes.end(); ) //遍历敌机
+    {
         if (plane == *it)   // 跳过自己
         {
             it++;
@@ -523,33 +534,35 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
             delete *it;
             it = enemyplanes.erase(it);
         }
-	}
+    }
 
-    /* 若此飞机为敌机，且与玩家飞机发生了碰撞 */
+    /* 若此飞机为敌机（ENEMY：小敌机或BOSS），且与玩家飞机发生了碰撞 */
     // collidesWithItem()用于碰撞检测
     if (plane->part == ENEMY && plane->collidesWithItem(myplane))
     {
         myplane->crash(this);
         plane->crash(this);
         updateBar(lifeBar, lifeFrameBar, LifeBarPos, -2, QBrush(Qt::green), true);
-        updateBar(lifeBar1,lifeFrameBar1,LifeBarPos1,-2,QBrush(Qt::red), false);
+        updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, -2, QBrush(Qt::red), false);
     }
 
-	/* 若plane存活，则更改坐标并同步屏幕 */
-	if (plane->life > 0)
-	{
+    /* 若plane存活，则更改坐标并同步屏幕 */
+    if (plane->life > 0)
+    {
+        // 以下代码可进行合并优化，获取一下移动后飞机当前坐标！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
         if(plane->part == ENEMY){
-            plane->moveBy(newX-plane->x(), newY-plane->y());
+            // moveBy()：为QGraphicsScene提供的一个移动方法，只需传入x和y的移动偏移量
+            plane->moveBy(newX - plane->x(), newY - plane->y());
             plane->update();    // update()用于刷新屏幕
         }
         else if(plane->part == ME){
             myPlanePos = QPointF(newX, newY);   // 获取我机当前坐标
-            plane->moveBy(newX-plane->x(), newY-plane->y());
+            plane->moveBy(newX - plane->x(), newY - plane->y());
             plane->update();    // update()用于刷新屏幕
         }
-	}
+    }
 
-	return plane->life > 0;
+    return plane->life > 0;
 }
 
 /* 根据敌机方向 更新敌机位置 */
@@ -557,22 +570,22 @@ bool Control::updateEnemyPlanes()
 {
     /* 若当前敌机少于1，则自动生成敌机，数目随机但小于3 */
     if (enemyplanes.size() < 1)
-	{
+    {
         int genNum = rand() % 3;
-		for (int i = 0; i < genNum; i++)
-			generateEnemyPlane();
+        for (int i = 0; i < genNum; i++)
+            generateEnemyPlane();
     }
 
-	/* 所有敌机移动位置 */
-	for (vector<EnemyPlane*>::iterator it = enemyplanes.begin(); it != enemyplanes.end(); )
-	{
+    /* 所有敌机移动位置 */
+    for (vector<EnemyPlane*>::iterator it = enemyplanes.begin(); it != enemyplanes.end();)
+    {
         //qDebug() << it-enemyplanes.begin() << "  (" << (*it)->x() << "," << (*it)->y() << ")";
-		pair<int, int> loc = (*it)->updatePosition();
-		if (changePlanePosition(*it, loc.first, loc.second))
-			it++;
-		else
-			it = enemyplanes.erase(it);
-	}
+        pair<int, int> loc = (*it)->updatePosition();
+        if (changePlanePosition(*it, loc.first, loc.second))
+            it++;
+        else
+            it = enemyplanes.erase(it);
+    }
 
     return myplane->life > 0;
 }
@@ -592,7 +605,7 @@ bool Control::changeBulletPosition(Bullet * bullet, int newX, int newY)
         myplane->crash(this);
         updateBar(lifeBar, lifeFrameBar, LifeBarPos, -2, QBrush(Qt::green), true);
         updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, -2, QBrush(Qt::red), false);
-        if(myplane->life<=0)
+        if(myplane->life <= 0)
             loseGame();
     }
     /* 然后检查敌机 */
@@ -606,7 +619,7 @@ bool Control::changeBulletPosition(Bullet * bullet, int newX, int newY)
             if (bullet->collidesWithItem(*it))
             {
                 bullet->hit(this);
-                alive = (*it)->crash(this);
+                alive = (*it)->crash(this);     // *it就是迭代器it所指向的元素
                 myplane->skill++;
                 updateBar(skillBar, skillFrameBar, SkillBarPos, +2, QBrush(Qt::blue), true);
                 score++;
@@ -642,7 +655,7 @@ bool Control::changeBulletPosition(Bullet * bullet, int newX, int newY)
             return false;
         }
         bullet->synScreen(this);    // 将子弹显示到屏幕上
-        bullet->moveBy(newX-bullet->x(), newY-bullet->y());
+        bullet->moveBy(newX - bullet->x(), newY - bullet->y());
         bullet->update();           // update()用于刷新屏幕
     }
 
@@ -670,16 +683,18 @@ void Control::shootEnemyBullets()
 {
     /* 仍存活的敌机发出新子弹，新子弹在敌机炮管外的位置 */
     for (vector<EnemyPlane*>::iterator iter = enemyplanes.begin(); iter != enemyplanes.end(); iter++)
-		if ((*iter)->life > 0)
+        if ((*iter)->life > 0)
         {
-            if((*iter)->type==ORD)
+            // 小敌机（普通敌机）
+            if((*iter)->type == ORD)
             {
                 Bullet *bullet = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
                                             enemyBulletImageFile, QPointF(0,1), enemyBulletPower);
                 enemybullets.push_back(bullet);
                 addItem(bullet);
             }
-            else if((*iter)->type==BOSS)
+            // BOSS机
+            else if((*iter)->type == BOSS)
             {
                 Bullet *bullet0 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
                                              bossBulletImageFile, QPointF(0,1), bossBulletPower);
@@ -688,13 +703,13 @@ void Control::shootEnemyBullets()
 
                 Bullet *bullet1 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
                                              bossBulletImageFile, QPointF(-1,1), bossBulletPower);
-                bullet1->setRotation(45);
+                bullet1->setRotation(45);   // 顺时针旋转45°
                 enemybullets.push_back(bullet1);
                 addItem(bullet1);
 
                 Bullet *bullet2 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
                                              bossBulletImageFile, QPointF(1,1), bossBulletPower);
-                bullet2->setRotation(-45);
+                bullet2->setRotation(-45);   // 逆时针旋转45°
                 enemybullets.push_back(bullet2);
                 addItem(bullet2);
             }
@@ -704,14 +719,14 @@ void Control::shootEnemyBullets()
 /* 更新玩家所有子弹位置 */
 void Control::updateMyBullets()
 {
-    for (vector<Bullet*>::iterator it = mybullets.begin(); it != mybullets.end(); )
-	{
-		pair<int, int> loc = (*it)->updatePosition();
-		if (changeBulletPosition(*it, loc.first, loc.second))
-			it++;
-		else
-		{
-			delete *it;
+    for (vector<Bullet*>::iterator it = mybullets.begin(); it != mybullets.end();)
+    {
+        pair<int, int> loc = (*it)->updatePosition();
+        if (changeBulletPosition(*it, loc.first, loc.second))
+            it++;
+        else
+        {
+            delete *it;
             it = mybullets.erase(it);
         }
     }
@@ -722,31 +737,34 @@ void Control::shootBullet()
 {
     /* 玩家飞机发出新子弹，新子弹在玩家飞机炮管外的位置 */
     // 不使用J技能，单发子弹
-    if(myBulletType==0)
+    if(myBulletType == 0)
     {
-        Bullet *bullet = new Bullet(ME, myplane->x()+32, myplane->y()-38,
-                                    myBulletImageFile, QPointF(0,-3), myBulletPower);
+        Bullet *bullet = new Bullet(ME, myplane->x() + 32, myplane->y() - 38,
+                                    myBulletImageFile, QPointF(0, -3), myBulletPower);
         mybullets.push_back(bullet);
         addItem(bullet);
     }
     // 使用J技能，3发子弹
-    else if(myBulletType==1)
+    else if(myBulletType == 1)
     {
-        Bullet *bullet1 = new Bullet(ME, myplane->x()+32, myplane->y()-38,
-                                     myBulletImageFile, QPointF(-3,-3), myBulletPower);
+        /* 左侧子弹 */
+        Bullet *bullet1 = new Bullet(ME, myplane->x() + 32, myplane->y() - 38,
+                                     myBulletImageFile, QPointF(-3, -3), myBulletPower);
         mybullets.push_back(bullet1);
-        bullet1->setRotation(-45);  // 左侧子弹，逆时针旋转45°
+        bullet1->setRotation(-45);  // 逆时针旋转45°
         addItem(bullet1);
 
-        Bullet *bullet2 = new Bullet(ME, myplane->x()+32, myplane->y()-38,
-                                     myBulletImageFile, QPointF(0,-3), myBulletPower);
+        /* 中间子弹 */
+        Bullet *bullet2 = new Bullet(ME, myplane->x() + 32, myplane->y() - 38,
+                                     myBulletImageFile, QPointF(0, -3), myBulletPower);
         mybullets.push_back(bullet2);
         addItem(bullet2);
 
-        Bullet *bullet3 = new Bullet(ME, myplane->x()+32, myplane->y()-38,
-                                     myBulletImageFile, QPointF(3,-3), myBulletPower);
+        /* 右侧子弹 */
+        Bullet *bullet3 = new Bullet(ME, myplane->x() + 32, myplane->y() - 38,
+                                     myBulletImageFile, QPointF(3, -3), myBulletPower);
         mybullets.push_back(bullet3);
-        bullet3->setRotation(45);   // 右侧子弹，顺时针旋转45°
+        bullet3->setRotation(45);   // 顺时针旋转45°
         addItem(bullet3);
     }
 }
@@ -758,7 +776,7 @@ void Control::updateBar(QGraphicsRectItem *bar, QGraphicsRectItem *frameBar, con
 
     qreal barWidth = bar->rect().width();       // barWidth 血条/技能条的宽度
     /* 更新血条宽度 */
-    if(var<0)
+    if(var < 0)
         barWidth = max((qreal)0, barWidth+var);
     else
         barWidth = min(frameBar->rect().width(), barWidth+var);
@@ -776,9 +794,10 @@ void Control::updateBar(QGraphicsRectItem *bar, QGraphicsRectItem *frameBar, con
     bar->setBrush(barBrush);
     bar->update();                              // update()用于刷新屏幕
 }
+
 /* 改变玩家血条位置（随机移动） */
 bool Control::changeLifeBarPosition(QPointF planePos){
-    LifeBarPos1 = QPointF(planePos.x()-10,planePos.y()-10);
+    LifeBarPos1 = QPointF(planePos.x() - 10, planePos.y() - 10);
     return true;
 }
 
@@ -961,7 +980,8 @@ void Control::startGame()
     for (int i = 0; i < 3; i++)
         generateEnemyPlane();
 }
-/* 播放音效 */
+
+///* 播放音效 */
 //void Control::playVoice(QMediaPlayer player, const string &voiceFile){
 //    player->currentMedia(voiceFile);
 //    player->play();
@@ -991,8 +1011,8 @@ void Control::showHelpMessage()
     helpText += tr("补给：\n");
     helpText += tr("    被击毁的敌机随机（25%）生成补给，即绿色的加号，每次可补充10点生命值");
     QMessageBox * messageBox = new QMessageBox;
-//    QIcon *icon = new QIcon(":/images/helpIcon_2.ico");
-//    messageBox->setWindowIcon(*icon);
+    //    QIcon *icon = new QIcon(":/images/helpIcon_2.ico");
+    //    messageBox->setWindowIcon(*icon);
     messageBox->setStyleSheet("background.png");
     messageBox->information(NULL,tr("游戏帮助"),helpText);
 
@@ -1000,6 +1020,6 @@ void Control::showHelpMessage()
 
     //QMessageBox::information(NULL,tr("游戏帮助"),helpText); // 弹出游戏帮助对话框
     //QMessageBox::information(QMessageBox::Warning,tr("游戏帮助"),helpText);
-//    QMessageBox::setIcon
-//    QMessageBox::iconPixmap(QPixmap(":/images/helpIcon_2.ico"));   // 游戏帮助图标
+    //    QMessageBox::setIcon
+    //    QMessageBox::iconPixmap(QPixmap(":/images/helpIcon_2.ico"));   // 游戏帮助图标
 }

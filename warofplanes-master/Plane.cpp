@@ -21,12 +21,12 @@ Plane::Plane(int x, int y, const string &imageFile, QGraphicsScene *scene, int l
 bool Plane::crash(QGraphicsScene *scene)
 {
     if (life <= 0)          //若已经耗尽生命值
-		return false;
+        return false;
     else if (--life <= 0)   //若生命值此次crash后耗尽
-	{
+    {
         delScreen(scene);
-		return false;
-	}
-	else
-		return true;
+        return false;
+    }
+    else
+        return true;
 }

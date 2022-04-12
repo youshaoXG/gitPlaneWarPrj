@@ -30,6 +30,12 @@
 
 第一次课程设计（控制台版）中各类关系如下： 
 
+> 箭头关系说明（个人理解，未必准确）：
+>
+> 1. 黑色填充箭头：表示的是对类的实例化
+> 2. 白色填充箭头：表示的是从属关系，上属于下
+> 3. 无箭头实线：基类与子类之间的派生关系，上基类，下派生类
+
 ![](http://www.writebug.com/myres/static/uploads/2021/10/19/4c8d9d4da7573e48c6d8654f307bd76f.writebug)
 
 如图，Plane 类中聚集了 Bullet 类的实例 bullets 数组，用于记录该飞机发出去的子弹；Plane 类派生出两个子类，MyPlane 与 EnemyPlane，分别是玩家飞机与敌机。这两个类均聚集在 Control 类中，由 Control 类对所有飞机的状态进行管理。由于 Control 与 Plane、MyPlane、EnemyPlane 关系密切，故我将 Control类设置为这几个类的友元。 
@@ -43,6 +49,20 @@ keyboardHandle是我自己写的一个函数，用于根据用户的不同按键
 ## 2.2 第二次课程设计（图形界面版） 
 
 第二次课程设计（图形界面版）中对类的关系进行了一些优化。因为 Plane和 Bullet 类都有一些共同的属性，所以设计了一些共同的基类 Object，以实现一些共同的性质，如 synScreen，delScreen 等。第二次课程设计是用的是 Qt 的QGraphicsScene、QGraphicsItem、QGraphicsView 三组件，其中 Control 继承自QGraphicsScene，Plane 与 Bullet 继承自 QGraphicsItem，在 main 函数中创建QGraphicsView与QGraphicsScene 相关联，主要操作都在 Control中完成。 
+
+> 类结构关系以及箭头含义说明（个人理解，未必准确）：
+>
+> 1. Object : public QGraphicsPixmapItem
+>     1. vector<Object*> lifesupplys;
+> 2. Bullet :  public Object
+>     1. vector<Bullet*> mybullets;
+>     2. vector<Bullet*> enemybullets; 
+> 3. Plane :   public Object
+> 4. MyPlane : protected Plane
+>     1. MyPlane *myplane;
+> 5. EnemyPlane : protected Plane
+>     1. vector<EnemyPlane*> enemyplanes;
+> 6. Control: public QGraphicsScene
 
 类结构图如下： 
 

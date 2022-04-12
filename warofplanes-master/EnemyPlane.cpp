@@ -13,5 +13,6 @@ EnemyPlane::EnemyPlane(int x, int y, const string &imageFile, QGraphicsScene *sc
 
 pair<int,int> EnemyPlane::updatePosition()
 {
+    // 利用make_pair创建新的pair对象，比较方便，可自动匹配数据类型
     return make_pair(x(), y()+2);
 }

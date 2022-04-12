@@ -16,7 +16,7 @@ Object::~Object()
 
 }
 
-/* ½«×Óµ¯ÏÔÊ¾µ½ÆÁÄ»ÉÏ:Display planes or bullets on the screen */
+/* æŠŠé£žæœºæˆ–è€…å­å¼¹æ˜¾ç¤ºåˆ°å±å¹•ä¸Šï¼šDisplay planes or bullets on the screen */
 void Object::synScreen(QGraphicsScene *scene)
 {
     if(!scene->items().contains(this))
@@ -26,10 +26,9 @@ void Object::synScreen(QGraphicsScene *scene)
     }
 }
 
-/* ½«×Óµ¯ÔÚÆÁÄ»ÉÏÄ¨È¥:Erase planes or bullets from the screen */
+/* æŠŠé£žæœºæˆ–è€…å­å¼¹ä»Žå±å¹•ä¸­æ¸…é™¤ï¼šErase planes or bullets from the screen */
 void Object::delScreen(QGraphicsScene *scene)
 {
     scene->removeItem(this);
     update();
 }
-

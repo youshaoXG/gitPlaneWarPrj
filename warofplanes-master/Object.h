@@ -14,11 +14,11 @@ public:
     Object();
     Object(WarPart part, const string &imageFile);
     ~Object();
-    void synScreen(QGraphicsScene *scene);  // 将子弹显示在屏幕上
-    void delScreen(QGraphicsScene *scene);  // 将子弹在屏幕上抹去
+    void synScreen(QGraphicsScene *scene);  // 将子弹或者飞机显示在屏幕上
+    void delScreen(QGraphicsScene *scene);  // 将子弹或者飞机在屏幕上抹去
 
 protected:
-    enum WarPart part;
+    enum WarPart part;                      // 玩家、敌机或供给
 };
 
 #endif // OBJECT_H

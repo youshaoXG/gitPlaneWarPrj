@@ -25,7 +25,7 @@ class Control: public QGraphicsScene
     Q_OBJECT
 public:
     /* Control类 的构造函数 */
-	Control();
+    Control();
 
 protected:
     /* 事件处理 */
@@ -36,7 +36,8 @@ protected:
 private:
     string myPlaneImageFile;                // 我方飞机 资源路径
     QPixmap m_pixmap;                       // 玩家飞机 图片类
-//    QPointF myPlanePos;                     // 玩家飞机位置
+    /* TODO */
+    //    QPointF myPlanePos;                     // 玩家飞机位置
     int myLife;                             // 我方飞机 生命值（血条）
     int mySkill;                            // 我方飞机 杀伤力（技能条）
 
@@ -67,11 +68,12 @@ private:
 
     string lifeSupplyImageFile;             // 生命补给 资源路径
 
-    MyPlane *myplane;                       // 我方飞机
-    vector<Bullet*> mybullets;              // 我方子弹
-    vector<EnemyPlane *> enemyplanes;       // 敌方飞机
-    vector<Bullet*> enemybullets;           // 敌方子弹
-    vector<Object*> lifesupplys;            // 生命补给
+    /* 玩家飞机、玩家子弹、敌机、敌机子弹、补给的实例化 */
+    MyPlane *myplane;                       // 实例化 我方飞机 对象（一个）
+    vector<Bullet*> mybullets;              // 实例化 我方子弹 对象（存于vector中）
+    vector<EnemyPlane*> enemyplanes;        // 实例化 敌方飞机 对象（存于vector中）
+    vector<Bullet*> enemybullets;           // 实例化 敌方子弹 对象（存于vector中）
+    vector<Object*> lifesupplys;            // 实例化 生命补给 对象（存于vector中）
 
     /* 血条、技能条 */
     QGraphicsRectItem *lifeFrameBar;        // 生命边框条
@@ -85,21 +87,24 @@ private:
     QMediaPlayer *player;                   // QMediaPlayer 类允许播放媒体源
     QMediaPlaylist *playList;               // QMediaPlaylist 类提供了要播放的媒体内容列表
 
-    QMediaPlayer *btnPlayer;               // 播放按钮音效
-    QMediaPlaylist *btnPlayList;           // 播放按钮音效
+    /* TODO */
+    QMediaPlayer *btnPlayer;                // 播放按钮音效 播放者？
+    QMediaPlaylist *btnPlayList;            // 播放按钮音效 列表？
 
+    /* TODO */
     string startBtnVoiceFile;               // 开始按钮 音效路径
     string helpBtnVoiceFile;                // 帮助按钮 音效路径
     string quitBtnVoiceFile;                // 退出按钮 音效路径
     string resumeBtnVoiceFile;              // 继续按钮 音效路径
     string retryBtnVoiceFile;               // 重试按钮 音效路径
 
-    bool generateEnemyPlane();              // 生成一架敌机
-    bool generateBoss();                    // 生成Boss
-	
-    bool changePlanePosition(Plane *plane, int newX, int newY);// 改变飞机位置，返回飞机是否还在战场？
+    /* 生成敌机（小飞机和BOSS） */
+    bool generateEnemyPlane();              // 生成小敌机，返回是否成功生成
+    bool generateBoss();                    // 生成Boss，返回是否成功生成
+
+    bool changePlanePosition(Plane *plane, int newX, int newY);// 改变飞机位置，返回飞机是否还在战场
     bool updateEnemyPlanes();               // 根据敌机方向 更新敌机位置
-	
+
     bool changeBulletPosition(Bullet *bullet, int newX, int newY); // 改变子弹位置，返回子弹是否还在战场
     void shootEnemyBullets();               // 所有敌机 发射子弹
     void updateMyBullets();                 // 更新玩家 所有子弹
@@ -118,7 +123,7 @@ private:
     int sceneId;                            // 游戏场景，0欢迎界面/1游戏界面/2暂停界面/3游戏结束
     int score;                              // 游戏得分（打掉的小敌机数，或者说敌机中弹次数）
 
-	// 游戏标题、提示信息等
+    // 游戏标题、提示信息等
     QGraphicsTextItem *titleText;           // 游戏标题
     QGraphicsTextItem *authorText;          // 作者信息
     QGraphicsTextItem *scoreText;           // 玩家当前打掉的飞机数 文本项
@@ -126,7 +131,7 @@ private:
     QGraphicsTextItem *gameHelpText;        // 游戏帮助 文本项
     void welcomeGame();                     // 初始界面
 
-	// 游戏按钮、遮罩面板（用于在游戏暂停时达到场景变暗的效果）
+    // 游戏按钮、遮罩面板（用于在游戏暂停时达到场景变暗的效果）
     QGraphicsWidget *maskWidget;            // 遮罩面板
     QGraphicsWidget *startGameButton;       // 游戏开始按钮
     QGraphicsWidget *helpGameButton;        // 游戏帮助按钮
@@ -134,7 +139,7 @@ private:
     QGraphicsWidget *retryGameButton;       // 重新游戏按钮
     QGraphicsWidget *quitGameButton;        // 退出游戏按钮
 
-/* Control类 的槽函数 */
+    /* Control类 的槽函数 */
 protected slots:
     void startGame();                       // 开始游戏
     void showHelpMessage();                 // 显示帮助信息
@@ -142,7 +147,9 @@ protected slots:
     void loseGame();                        // 玩家生命值用尽
     void retryGame();                       // 重新开始
     void quitGame();                        // 结束游戏
-//    void playVoice(QMediaPlayer player, const string &voiceFile);// 播放音效
+
+    /* TODO */
+    //    void playVoice(QMediaPlayer player, const string &voiceFile);// 播放音效
 };
 
 #endif // !CONTROL_H
