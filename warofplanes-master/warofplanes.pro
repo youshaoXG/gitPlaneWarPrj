@@ -22,6 +22,7 @@ SOURCES += \
 CONFIG += C++11
 
 #RC_FILE = icon.rc
+RC_ICONS = warofplanesicon.ico
 
 DISTFILES +=
 

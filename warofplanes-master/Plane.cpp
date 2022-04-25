@@ -11,10 +11,10 @@ Plane::Plane()
 Plane::Plane(int x, int y, const string &imageFile, QGraphicsScene *scene, int life, enum WarPart part):
     Object(part, imageFile)
 {
-    setPos(x, y);
-    this->life = life;
-    scene->addItem(this);
-    update();
+    setPos(x, y);           // 设置 初始位置
+    this->life = life;      // 设置 生命值初值
+    scene->addItem(this);   // 把实例化的Plane对象添加到场景scene中
+    update();               //
 }
 
 /* 用于飞机与飞机或子弹相撞时降低生命值，生命值降为0时抹去飞机 */

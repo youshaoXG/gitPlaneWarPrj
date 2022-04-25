@@ -48,5 +48,7 @@
         <file>music/sound3.wav</file>
         <file>music/starwars.mp3</file>
         <file>images/myplane_9090.png</file>
+        <file>images/others/superMaliJoke.gif</file>
+        <file>images/help.bmp</file>
     </qresource>
 </RCC>

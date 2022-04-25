@@ -1,29 +1,35 @@
 #include "Control.h"
 
-const QPointF scoreTextPos = QPointF(643, 503); // 玩家 分数文本坐标
-const QPointF LifeBarPos   = QPointF(650, 550); // 玩家 血条坐标
-static QPointF LifeBarPos1 = QPointF(351, 380); // 玩家 血条坐标（跟随玩家飞机移动）
-const QPointF SkillBarPos  = QPointF(650, 570); // 玩家 技能条坐标
+// 加载gif动图要用到的头文件
+#include <QMovie>
+#include <QCoreApplication>
 
-const int myBulletShootTimerItv = 200;          // 我方发射一颗子弹的 时间间隔
-const int myBulletShootTimerItv1 = 20;          // 发射超级一颗子弹的 时间间隔
-const int enemyBulletShootTimerItv = 1000;      // 敌方发射一颗子弹的 时间间隔
-const int allBulletMoveTimerItv = 10;           // 所有子弹移动一下的 时间间隔
+/* -------------------------全局常量------------------------- */
+// x=(width()-myplane_pixmap.width())/2, y=(height()+2*myplane_pixmap.height())/2
+const QPointF myPlanePos = QPointF(360, 390);                   // 玩家飞机初始化位置，也可用于计算玩家血条的初始位置（屏幕中央偏下）
+const QPointF scoreTextPos = QPointF(643, 503);                 // 玩家 分数文本坐标
+const QPointF LifeBarPos   = QPointF(650, 550);                 // 玩家 血条坐标
+const QPointF SkillBarPos  = QPointF(650, 570);                 // 玩家 技能条坐标
 
-const int myPlaneMoveTimerItv = 30;             // 我机移动一次的 时间间隔
-const int enemyPlaneMoveTimerItv = 50;          // 敌机移动一次的 时间间隔
-const int enemyPlaneGenerateTimerItv = 3000;    // 每生成一个敌机 时间间隔
-const int bossGenerateTimeItv = 5000;           // 每生成一个BOSS 时间间隔
+const int myBulletShootTimerItv = 200;                          // 我方发射一颗子弹的 时间间隔
+const int myBulletShootTimerItv1 = 20;                          // 发射超级一颗子弹的 时间间隔
+const int enemyBulletShootTimerItv = 1000;                      // 敌方发射一颗子弹的 时间间隔
+const int allBulletMoveTimerItv = 10;                           // 所有子弹移动一下的 时间间隔
 
-QPointF myPlanePos = QPointF((800-79)/2,(600+2*90)/2);// 玩家飞机位置
+const int myPlaneMoveTimerItv = 30;                             // 我机移动一次的 时间间隔
+const int enemyPlaneMoveTimerItv = 50;                          // 敌机移动一次的 时间间隔
+const int enemyPlaneGenerateTimerItv = 3000;                    // 每生成一个敌机 时间间隔
+const int bossGenerateTimeItv = 5000;                           // 每生成一个BOSS 时间间隔
+
+/* -------------------------全局静态变量------------------------- */
+static QPointF LifeBarPos1 = QPointF(myPlanePos.x()-10, myPlanePos.y()-10); // 玩家 血条坐标（跟随玩家飞机移动）
 
 /* 管理者Control类的构造方法 */
 Control::Control()
 {
-    setSceneRect(0,0,800,600);                                  // 设置 场景矩形大小
+    setSceneRect(0, 0, 800, 600);                               // 设置 游戏场景矩形大小
 
     this->myPlaneImageFile = ":/images/myplane.png";            // 玩家飞机 资源路径
-    m_pixmap = QPixmap(QString::fromStdString(myPlaneImageFile));// 玩家飞机 图片类
     this->myLife = 50;                                          // 玩家 初始生命值（满血）
     this->mySkill = 5;                                          // 玩家 初始技能值
 
@@ -143,12 +149,14 @@ Control::Control()
     //startGameBtn->setFont(QFont("方正盛世楷书简体_大", 18));
     //startGameBtn->setStyleSheet("QPushButton{background: transparent; color:white; }"
     //                            "QPushButton:hover{color:red; }");
-    // 设置按钮样式：背景为透明、字体颜色white，悬浮后字体颜色变red并且字体放大为30px，按下后按钮下沉
+    // 设置按钮样式：背景为透明、字体颜色white，悬浮后字体颜色变red并且字体放大为30px，按下后按钮下沉（出了点问题，字体默认大小很大，并不是设置的18号，想到一种可行的办法是在下面这行中重新设置以下大小）
     startGameBtn->setStyleSheet("QPushButton{background:transparent; color:white; }"
                                 "QPushButton:hover{color:red; font-size:30px; }"
-                                "QPushButton:pressed{border-left:6px; border-top:6px; }");
-//                                "QPushButton:pressed{padding-left:6px; padding-top:6px; border:10px; }");
-    connect(startGameBtn,SIGNAL(clicked()), this, SLOT(startGame()));
+                                "QPushButton:pressed{padding-left:6px; padding-top:6px; }");
+//    startGameBtn->setStyleSheet("QPushButton{background-color:rgba(0, 0, 255, 100); color:white; }"
+//                                "QPushButton:hover{color:red; font-size:30px; }"
+//                                "QPushButton:pressed{padding-left:6px; padding-top:6px; }");
+    connect(startGameBtn, SIGNAL(clicked()), this, SLOT(startGame()));
     //    connect(startGameBtn,SIGNAL(pressed()),this,SLOT(playVoice())); // 播放音效
     startGameButton = addWidget(startGameBtn);
     startGameButton->setPos(331, 250);
@@ -158,7 +166,7 @@ Control::Control()
     /* 游戏帮助 */
     QPushButton *helpGameBtn = new QPushButton(tr("游戏帮助"));
     helpGameBtn->setFont(QFont("Font Creator Program", 18));
-    helpGameBtn->setStyleSheet("QPushButton{background: transparent; color:white; }"
+    helpGameBtn->setStyleSheet("QPushButton{background:transparent; color:white; }"
                                "QPushButton:hover{color:yellow; font-size:30px; }"
                                "QPushButton:pressed{padding-left:6px; padding-top:6px; }");
     connect(helpGameBtn,SIGNAL(clicked()), this, SLOT(showHelpMessage()));
@@ -231,7 +239,7 @@ Control::Control()
     retryGameButton->setZValue(2);
     retryGameButton->hide();
 
-    /* 进入欢迎界面，之后按Enter开始游戏 */
+    /* 进入欢迎界面，之后按Enter键或者按下开始游戏按钮开始游戏 */
     welcomeGame();
 }
 
@@ -240,7 +248,8 @@ void Control::timerEvent(QTimerEvent *event)
 {
     if(event->timerId()==myPlaneMoveTimerId){
         changePlanePosition(myplane, myplane->x() + myPlaneMove.x(), myplane->y() + myPlaneMove.y());
-        changeLifeBarPosition(myPlanePos);                                          // 更新血条位置
+//        changeLifeBarPosition(myPlanePos);                                          // 更新血条位置
+        changeLifeBarPosition(QPointF(myplane->x(), myplane->y()));                 // 更新血条位置
         updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, 0, QBrush(Qt::red), false); // 更新血条
     }
     else if(event->timerId()==enemyBulletShootTimerId)
@@ -464,14 +473,14 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
     /* 检查新位置是否合法，不合法则直接返回true */
     //    if (newX<0 || newX>width() || newY<0 || newY>height())
     // 敌机只能往下移动，只检查是否出下界，玩家飞机四个方向均要检测
-    if (newX<0 || newX>(width()-m_pixmap.width()) || newY<0 || newY>(height()-m_pixmap.height()))
+    if (newX<0 || newX>(width()-plane->width) || newY<0 || newY>(height()-plane->height))
     {
         if (plane->part == ME)          //玩家飞机不允许出界
             return true;
         else if (plane->part == ENEMY)  //敌机不允许出上界、左界、右界，但出下界之后将被删除
         {
-            if (newY > height())
-//            if (newY>(height()-m_pixmap.height()))
+            //  if (newY > height())
+            if (newY > (height() - plane->height))
             {
                 plane->delScreen(this);
                 return false;
@@ -482,13 +491,14 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
     }
 
     /* 若为玩家飞机，则首先检查是否与补给碰撞，遇到生命补给则血量+5 */
-    if(plane->part==ME)
-        for(vector<Object*>::iterator it=lifesupplys.begin();it!=lifesupplys.end(); )
+    if(plane->part == ME)
+        for(vector<Object*>::iterator it = lifesupplys.begin(); it != lifesupplys.end(); )
         {
             // collidesWithItem()用于碰撞检测
             if(plane->collidesWithItem(*it))
             {
-                plane->life = min(plane->life+10, myLife);
+                // std::min(a,b); 返回给定值a,b中的较小者,a与b相等则返回第一个数a
+                plane->life = min(plane->life + 10, myLife);
                 updateBar(lifeBar, lifeFrameBar, LifeBarPos, +20, QBrush(Qt::green), true);
                 updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, +20, QBrush(Qt::red), false);
                 removeItem(*it);
@@ -523,8 +533,13 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
                 updateBar(lifeBar, lifeFrameBar, LifeBarPos, -2, QBrush(Qt::green), true);
                 updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, -2, QBrush(Qt::red), false);
             }
+            // 这个还没搞懂，为什么敌机与敌机碰撞为什么不允许改变位置？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
             if (plane->part == ENEMY) //若同为敌机，则不允许改变位置，NOCHANGE
                 return true;
+//            if (plane->part == ENEMY) {//若同为敌机，则不允许改变位置，NOCHANGE
+//                plane->update();
+//                return true;
+//            }
         }
 
         if (alive)
@@ -540,8 +555,10 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
     // collidesWithItem()用于碰撞检测
     if (plane->part == ENEMY && plane->collidesWithItem(myplane))
     {
+        /* 降低相碰撞飞机双方的生命值 */
         myplane->crash(this);
         plane->crash(this);
+        /* 更新血条 */
         updateBar(lifeBar, lifeFrameBar, LifeBarPos, -2, QBrush(Qt::green), true);
         updateBar(lifeBar1, lifeFrameBar1, LifeBarPos1, -2, QBrush(Qt::red), false);
     }
@@ -549,23 +566,18 @@ bool Control::changePlanePosition(Plane *plane, int newX, int newY)
     /* 若plane存活，则更改坐标并同步屏幕 */
     if (plane->life > 0)
     {
-        // 以下代码可进行合并优化，获取一下移动后飞机当前坐标！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        if(plane->part == ENEMY){
-            // moveBy()：为QGraphicsScene提供的一个移动方法，只需传入x和y的移动偏移量
-            plane->moveBy(newX - plane->x(), newY - plane->y());
-            plane->update();    // update()用于刷新屏幕
-        }
-        else if(plane->part == ME){
-            myPlanePos = QPointF(newX, newY);   // 获取我机当前坐标
-            plane->moveBy(newX - plane->x(), newY - plane->y());
-            plane->update();    // update()用于刷新屏幕
-        }
+//        if(plane->part == ME)
+//            myPlanePos = QPointF(newX, newY);                   // 获取我机当前坐标
+
+        // moveBy()：为QGraphicsScene提供的一个移动方法，只需传入x和y的移动偏移量
+        plane->moveBy(newX - plane->x(), newY - plane->y());
+        plane->update();                                        // update()用于刷新屏幕
     }
 
     return plane->life > 0;
 }
 
-/* 根据敌机方向 更新敌机位置 */
+/* 根据敌机方向 更新敌机位置 返回玩家飞机是否还有生命值 */
 bool Control::updateEnemyPlanes()
 {
     /* 若当前敌机少于1，则自动生成敌机，数目随机但小于3 */
@@ -579,7 +591,8 @@ bool Control::updateEnemyPlanes()
     /* 所有敌机移动位置 */
     for (vector<EnemyPlane*>::iterator it = enemyplanes.begin(); it != enemyplanes.end();)
     {
-        //qDebug() << it-enemyplanes.begin() << "  (" << (*it)->x() << "," << (*it)->y() << ")";
+//        // 下一行是打印出当前有几个敌机，及其相应的坐标
+//        qDebug() << it-enemyplanes.begin() << "  (" << (*it)->x() << "," << (*it)->y() << ")";
         pair<int, int> loc = (*it)->updatePosition();
         if (changePlanePosition(*it, loc.first, loc.second))
             it++;
@@ -688,27 +701,31 @@ void Control::shootEnemyBullets()
             // 小敌机（普通敌机）
             if((*iter)->type == ORD)
             {
-                Bullet *bullet = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
-                                            enemyBulletImageFile, QPointF(0,1), enemyBulletPower);
+                Bullet *bullet = new Bullet(ENEMY, (*iter)->x() + (*iter)->pixmap().width()/2 - 7,
+                                            (*iter)->y() + (*iter)->pixmap().height() - 15,
+                                            enemyBulletImageFile, QPointF(0, 1), enemyBulletPower);
                 enemybullets.push_back(bullet);
                 addItem(bullet);
             }
             // BOSS机
             else if((*iter)->type == BOSS)
             {
-                Bullet *bullet0 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
-                                             bossBulletImageFile, QPointF(0,1), bossBulletPower);
+                Bullet *bullet0 = new Bullet(ENEMY, (*iter)->x() + (*iter)->pixmap().width()/2 - 7,
+                                             (*iter)->y() + (*iter)->pixmap().height() - 15,
+                                             bossBulletImageFile, QPointF(0, 1), bossBulletPower);
                 enemybullets.push_back(bullet0);
                 addItem(bullet0);
 
-                Bullet *bullet1 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
-                                             bossBulletImageFile, QPointF(-1,1), bossBulletPower);
+                Bullet *bullet1 = new Bullet(ENEMY, (*iter)->x() + (*iter)->pixmap().width()/2 - 7,
+                                             (*iter)->y() + (*iter)->pixmap().height() - 15,
+                                             bossBulletImageFile, QPointF(-1, 1), bossBulletPower);
                 bullet1->setRotation(45);   // 顺时针旋转45°
                 enemybullets.push_back(bullet1);
                 addItem(bullet1);
 
-                Bullet *bullet2 = new Bullet(ENEMY, (*iter)->x()+(*iter)->pixmap().width()/2-7, (*iter)->y()+(*iter)->pixmap().height()-15,
-                                             bossBulletImageFile, QPointF(1,1), bossBulletPower);
+                Bullet *bullet2 = new Bullet(ENEMY, (*iter)->x() + (*iter)->pixmap().width()/2 - 7,
+                                             (*iter)->y() + (*iter)->pixmap().height() - 15,
+                                             bossBulletImageFile, QPointF(1, 1), bossBulletPower);
                 bullet2->setRotation(-45);   // 逆时针旋转45°
                 enemybullets.push_back(bullet2);
                 addItem(bullet2);
@@ -719,15 +736,15 @@ void Control::shootEnemyBullets()
 /* 更新玩家所有子弹位置 */
 void Control::updateMyBullets()
 {
-    for (vector<Bullet*>::iterator it = mybullets.begin(); it != mybullets.end();)
+    for (vector<Bullet*>::iterator iter = mybullets.begin(); iter != mybullets.end();)
     {
-        pair<int, int> loc = (*it)->updatePosition();
-        if (changeBulletPosition(*it, loc.first, loc.second))
-            it++;
+        pair<int, int> loc = (*iter)->updatePosition();
+        if (changeBulletPosition(*iter, loc.first, loc.second))
+            iter++;
         else
         {
-            delete *it;
-            it = mybullets.erase(it);
+            delete *iter;
+            iter = mybullets.erase(iter);
         }
     }
 }
@@ -776,10 +793,12 @@ void Control::updateBar(QGraphicsRectItem *bar, QGraphicsRectItem *frameBar, con
 
     qreal barWidth = bar->rect().width();       // barWidth 血条/技能条的宽度
     /* 更新血条宽度 */
+    // std::max(a,b); 返回给定值a,b中的较大者,a与b相等则返回第一个数a
     if(var < 0)
-        barWidth = max((qreal)0, barWidth+var);
+        barWidth = max((qreal)0, barWidth + var);
+    // std::min(a,b); 返回给定值a,b中的较小者,a与b相等则返回第一个数a
     else
-        barWidth = min(frameBar->rect().width(), barWidth+var);
+        barWidth = min(frameBar->rect().width(), barWidth + var);
     /* 画轮廓 */
     frameBar->setRect(pos.x(), pos.y(), 100, frameBar->rect().height());
     if(isFrameBarBrush) {
@@ -797,6 +816,7 @@ void Control::updateBar(QGraphicsRectItem *bar, QGraphicsRectItem *frameBar, con
 
 /* 改变玩家血条位置（随机移动） */
 bool Control::changeLifeBarPosition(QPointF planePos){
+    /* 根据飞机当前位置计算出血条的位置 */
     LifeBarPos1 = QPointF(planePos.x() - 10, planePos.y() - 10);
     return true;
 }
@@ -972,9 +992,8 @@ void Control::startGame()
     bossGenerateTimeId = startTimer(bossGenerateTimeItv);
 
     /* 添加玩家飞机 */
-    myplane = new MyPlane((width()-m_pixmap.width())/2, (height()+2*m_pixmap.height())/2,
-                          myPlaneImageFile, this, myLife, mySkill);                             // 添加玩家飞机在屏幕中央靠下一点的位置
-    myplane->synScreen(this);                                                                   // 将玩家飞机显示到屏幕上
+    myplane = new MyPlane(myPlanePos.x(), myPlanePos.y(), myPlaneImageFile, this, myLife, mySkill); // 添加玩家飞机在屏幕中央靠下一点的位置
+    myplane->synScreen(this);                                                                       // 将玩家飞机显示到屏幕上
 
     /* 添加敌机 */
     for (int i = 0; i < 3; i++)
@@ -994,12 +1013,12 @@ void Control::showHelpMessage()
     helpText += tr("欢迎来到飞机大战！\n\n");
     helpText += tr("游戏规则：\n");
     helpText += tr("    1. 当你击落敌机时，你的得分和技能值都会相应地增加\n");
-    helpText += tr("    2. 若你被敌机击中或撞到，你的生命值会相应减少\n");
+    helpText += tr("    2. 若你被敌机击中或撞到，双方生命值均会相应减少\n");
     helpText += tr("    3. 当你的技能值达到一定量的时候，便可释放技能\n\n");
     helpText += tr("操作：\n");
     helpText += tr("    W：向上移动； S：向下移动；\n");
     helpText += tr("     A：向左移动； D：向右移动；\n");
-    helpText += tr("    空格键：暂停/继续游戏\n\n");
+    helpText += tr("    空格键：暂停或继续游戏\n\n");
     helpText += tr("技能：\n");
     helpText += tr("    J：无敌子弹技能，一次发射三个方向的子弹，消耗5点技能\n");
     helpText += tr("    K：轰炸技能，一次性炸掉所有敌机，消耗3点技能\n");
@@ -1011,15 +1030,60 @@ void Control::showHelpMessage()
     helpText += tr("补给：\n");
     helpText += tr("    被击毁的敌机随机（25%）生成补给，即绿色的加号，每次可补充10点生命值");
     QMessageBox * messageBox = new QMessageBox;
-    //    QIcon *icon = new QIcon(":/images/helpIcon_2.ico");
-    //    messageBox->setWindowIcon(*icon);
-    messageBox->setStyleSheet("background.png");
-    messageBox->information(NULL,tr("游戏帮助"),helpText);
+    messageBox->setStyleSheet("QLabel {color:blue; font-size:15px; }");
+    messageBox->setWindowTitle("游戏帮助");
+    messageBox->setText(helpText);
+    messageBox->show();
 
-
-
-    //QMessageBox::information(NULL,tr("游戏帮助"),helpText); // 弹出游戏帮助对话框
-    //QMessageBox::information(QMessageBox::Warning,tr("游戏帮助"),helpText);
-    //    QMessageBox::setIcon
-    //    QMessageBox::iconPixmap(QPixmap(":/images/helpIcon_2.ico"));   // 游戏帮助图标
+    //messageBox->information(NULL, tr("游戏帮助"), helpText);
+    // information原型：
+    /* static StandardButton information(QWidget *parent, const QString &title,
+         const QString &text, StandardButtons buttons = Ok,
+         StandardButton defaultButton = NoButton); */
 }
+
+//void Control::showHelpMessage()
+//{
+//    QLabel *welcomeLabel = new QLabel("欢迎来到飞机大战！");
+//    QGraphicsWidget *wel = this->addWidget(welcomeLabel);
+//    wel->setPos(0, 20);
+//    wel->setZValue(2);
+//    wel->show();
+
+//    QLabel *ruleLabel = new QLabel;
+//    ruleLabel->setText("游戏规则：\n"
+//                       "    1. 当你击落敌机时，你的得分和技能值都会相应地增加\n"
+//                       "    2. 若你被敌机击中或撞到，你的生命值会相应减少\n"
+//                       "    3. 当你的技能值达到一定量的时候，便可释放技能\n\n");
+//    QString helpText;
+// //    helpText += tr("欢迎来到飞机大战！\n\n");
+// //    helpText += tr("游戏规则：\n");
+// //    helpText += tr("    1. 当你击落敌机时，你的得分和技能值都会相应地增加\n");
+// //    helpText += tr("    2. 若你被敌机击中或撞到，你的生命值会相应减少\n");
+// //    helpText += tr("    3. 当你的技能值达到一定量的时候，便可释放技能\n\n");
+//    helpText += tr("操作：\n");
+//    helpText += tr("    W：向上移动； S：向下移动；\n");
+//    helpText += tr("     A：向左移动； D：向右移动；\n");
+//    helpText += tr("    空格键：暂停/继续游戏\n\n");
+//    helpText += tr("技能：\n");
+//    helpText += tr("    J：无敌子弹技能，一次发射三个方向的子弹，消耗5点技能\n");
+//    helpText += tr("    K：轰炸技能，一次性炸掉所有敌机，消耗3点技能\n");
+//    helpText += tr("    L：子弹拦截技能，一次性拦截掉所有子弹，消耗7点技能\n");
+//    helpText += tr("    N：触发超级子弹，威力为普通子弹的10倍，消耗6点技能\n\n");
+//    helpText += tr("进度条：\n");
+//    helpText += tr("    1. 绿色进度条：你的生命值\n");
+//    helpText += tr("    2. 蓝色进度条：你的技能值\n\n");
+//    helpText += tr("补给：\n");
+//    helpText += tr("    被击毁的敌机随机（25%）生成补给，即绿色的加号，每次可补充10点生命值");
+//    QMessageBox * messageBox = new QMessageBox;
+// //    messageBox->information(NULL,tr("游戏帮助"),helpText);
+
+
+//    messageBox->setStyleSheet("QLabel {background-image:url(:/images/help.bmp);"
+//                              "color:blue; font-size:15px; }");
+//    messageBox->setWindowTitle("游戏帮助");
+//    messageBox->setText(helpText);
+//    messageBox->show();
+//    messageBox->adjustSize();
+//    ruleLabel->show();
+//}

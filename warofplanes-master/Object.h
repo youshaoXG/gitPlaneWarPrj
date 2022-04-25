@@ -19,6 +19,10 @@ public:
 
 protected:
     enum WarPart part;                      // 玩家、敌机或供给
+
+    /* TODO√ */
+    int width;                              // Object对象的 宽度
+    int height;                             // Object对象的 高度
 };
 
 #endif // OBJECT_H
